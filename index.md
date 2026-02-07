@@ -1,12 +1,12 @@
 # OpenClaw Collection Index
 
-**Last Updated**: 2026-02-07_15-16
+**Last Updated**: 2026-02-07_15-24
 
 ## Collection Stats
 
 - Skills:       53
 - Docs:      617
-- Collection Dates:        1
+- Collection Dates:        2
 
 ## Directory Structure
 
@@ -15,7 +15,7 @@ openclaw-collector/
 ├── skills/          # Skill details (SKILL.md files)
 ├── docs/           # Documentation files
 ├── data/           # Daily snapshots
-│   └── 2026-02-07_15-16/  # Latest collection
+│   └── 2026-02-07_15-24/  # Latest collection
 ├── index.md        # This index
 └── collector.sh    # Collection script
 ```

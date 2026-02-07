@@ -96,3 +96,11 @@ EOF
 
 echo "=== [$DATE] 收集完成 ===" >> $LOG_FILE
 echo "收集完成！时间: $DATE" >> $LOG_FILE
+
+# 5. 自动推送到GitHub
+echo "推送到GitHub..." >> $LOG_FILE
+cd "$COLLECTOR_DIR"
+git add -A
+git commit -m "Auto-collect: $DATE" >> $LOG_FILE 2>&1
+git push origin main >> $LOG_FILE 2>&1
+echo "GitHub同步完成" >> $LOG_FILE
