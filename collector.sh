@@ -14,6 +14,9 @@ LOG_FILE="$COLLECTOR_DIR/collection.log"
 
 echo "=== [$DATE] 开始收集 ===" >> $LOG_FILE
 
+# 创建数据目录
+mkdir -p "$DATA_DIR/$DATE"
+
 # 1. 收集Skills列表
 echo "收集Skills..." >> $LOG_FILE
 ls "$OPENCLAW_DIR/skills/" > "$DATA_DIR/$DATE/skills_list_$DATE.txt"
