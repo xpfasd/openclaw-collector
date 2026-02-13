@@ -1164,3 +1164,53 @@ TypeError: Cannot read properties of undefined (reading 'map')
 
 Node.js v25.5.0
 推送到GitHub...
+[main 00028c2] Auto-collect: 2026-02-13_07-30
+ Committer: xie xie <xiexie@xiedeMac-mini.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 975 insertions(+), 2 deletions(-)
+ create mode 100644 data/2026-02-13_07-30/docs_dirs_2026-02-13_07-30.txt
+ create mode 100644 data/2026-02-13_07-30/docs_list_2026-02-13_07-30.txt
+ create mode 100644 data/2026-02-13_07-30/skills_list_2026-02-13_07-30.txt
+ create mode 100644 data/2026-02-13_07-30/skills_summary_2026-02-13_07-30.md
+=== [2026-02-13_07-30] 开始收集 ===
+收集Skills...
+- 找到       52 个Skills
+收集Docs...
+- 找到      638 个文档
+生成技能摘要...
+生成技能数据...
+更新site.json...
+更新索引...
+生成网站...
+🏗️  Building OpenClaw Site...
+
+📁  Copying assets...
+📄  Generating index.html...
+/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js:93
+  const categoriesHTML = siteData.stats.categories.map(cat => `
+                                                   ^
+
+TypeError: Cannot read properties of undefined (reading 'map')
+    at generateIndex (/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js:93:52)
+    at build (/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js:274:57)
+    at Object.<anonymous> (/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js:306:1)
+    at Module._compile (node:internal/modules/cjs/loader:1803:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)
+    at Module.load (node:internal/modules/cjs/loader:1524:32)
+    at Module._load (node:internal/modules/cjs/loader:1326:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+
+Node.js v25.5.0
+推送到GitHub...
