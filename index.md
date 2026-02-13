@@ -1,30 +1,21 @@
 # OpenClaw Collection Index
 
-**Last Updated**: 2026-02-07_15-24
+**Last Updated**: 2026-02-12_23-30
 
 ## Collection Stats
 
-- Skills:       53
-- Docs:      617
-- Collection Dates:        2
+- Skills: 
+- Docs: 
 
-## Directory Structure
+## Collection Dates
 
-```
-openclaw-collector/
-├── skills/          # Skill details (SKILL.md files)
-├── docs/           # Documentation files
-├── data/           # Daily snapshots
-│   └── 2026-02-07_15-24/  # Latest collection
-├── index.md        # This index
-└── collector.sh    # Collection script
-```
+2026-02-07_15-16
+2026-02-07_15-24
 
-## How to Use
+## Quick Links
 
-1. Browse `data/` for daily snapshots
-2. Check `skills/` for detailed skill documentation
-3. Review `docs/` for OpenClaw documentation
+- [Skills Index](/openclaw-site-output/skills/)
+- [Categories](/openclaw-site-output/categories/)
 
 ## Cron Schedule
 
