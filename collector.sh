@@ -68,8 +68,8 @@ extract_yaml_field() {
   local file=$1
   local field=$2
   if [ -f "$file" ]; then
-    # 提取description字段（支持带引号和不带引号的值）
-    sed -n "s/^$field: *[\"\']\?\(.*\)[\"\']\?/\1/p" "$file" | head -1 | sed 's/"/\\"/g' | head -c 300
+    # 提取description字段（支持带引号的值）
+    sed -n "s/^$field: *\"\(.*\)\"/\1/p" "$file" | head -1 | sed 's/"/\\"/g' | head -c 300
   fi
 }
 cat > "$DATA_DIR/$DATE/skills_summary_$DATE.md" << EOF
