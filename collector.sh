@@ -17,11 +17,30 @@ echo "=== [$DATE] 开始收集 ===" >> $LOG_FILE
 # 创建数据目录
 mkdir -p "$DATA_DIR/$DATE"
 
-# 1. 收集Skills列表
+# 1. 收集OpenClaw内置Skills
 echo "收集Skills..." >> $LOG_FILE
 ls "$OPENCLAW_DIR/skills/" > "$DATA_DIR/$DATE/skills_list_$DATE.txt"
 SKILL_COUNT=$(wc -l < "$DATA_DIR/$DATE/skills_list_$DATE.txt")
-echo "- 找到 $SKILL_COUNT 个Skills" >> $LOG_FILE
+echo "- 找到 $SKILL_COUNT 个内置Skills" >> $LOG_FILE
+
+# 2. 收集工作空间自定义Skills
+echo "收集工作空间Skills..." >> $LOG_FILE
+WORKSPACE_SKILLS_DIR="/Users/xiexie/.openclaw/skills"
+if [ -d "$WORKSPACE_SKILLS_DIR" ]; then
+  WORKSPACE_SKILL_COUNT=$(ls -1 "$WORKSPACE_SKILLS_DIR/" 2>/dev/null | wc -l)
+  echo "- 找到 $WORKSPACE_SKILL_COUNT 个工作空间Skills" >> $LOG_FILE
+  mkdir -p "$DATA_DIR/$DATE/workspace_skills"
+  for skill in "$WORKSPACE_SKILLS_DIR/"*/; do
+    if [ -f "$skill/SKILL.md" ]; then
+      SKILL_NAME=$(basename "$skill")
+      mkdir -p "$DATA_DIR/$DATE/workspace_skills/$SKILL_NAME"
+      cp "$skill/SKILL.md" "$DATA_DIR/$DATE/workspace_skills/$SKILL_NAME/"
+    fi
+  done
+else
+  echo "- 工作空间Skills目录不存在" >> $LOG_FILE
+  WORKSPACE_SKILL_COUNT=0
+fi
 
 # 收集每个skill的说明
 for skill in "$OPENCLAW_DIR/skills/"*/; do
@@ -43,6 +62,16 @@ find "$OPENCLAW_DIR/docs/" -type d > "$DATA_DIR/$DATE/docs_dirs_$DATE.txt"
 
 # 3. 生成技能摘要
 echo "生成技能摘要..." >> $LOG_FILE
+
+# 函数：从YAML frontmatter提取字段
+extract_yaml_field() {
+  local file=$1
+  local field=$2
+  if [ -f "$file" ]; then
+    # 提取description字段（支持带引号和不带引号的值）
+    sed -n "s/^$field: *[\"\']\?\(.*\)[\"\']\?/\1/p" "$file" | head -1 | sed 's/"/\\"/g' | head -c 300
+  fi
+}
 cat > "$DATA_DIR/$DATE/skills_summary_$DATE.md" << EOF
 # OpenClaw Skills Summary
 Generated: $DATE
@@ -54,12 +83,30 @@ EOF
 for skill_dir in "$OPENCLAW_DIR/skills/"*/; do
   SKILL_NAME=$(basename "$skill_dir")
   if [ -f "$skill_dir/SKILL.md" ]; then
-    DESC=$(grep -m1 "<description>" "$skill_dir/SKILL.md" 2>/dev/null | sed 's/<[^>]*>//g' | tr -d '\n' | head -c 200 || echo "No description")
+    DESC=$(extract_yaml_field "$skill_dir/SKILL.md" "description")
+    [ -z "$DESC" ] && DESC="No description"
     echo "### $SKILL_NAME" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
     echo "- $DESC" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
     echo "" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
   fi
 done
+
+# 添加工作空间技能到摘要
+if [ -d "$WORKSPACE_SKILLS_DIR" ]; then
+  echo "" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
+  echo "## Workspace Skills ($WORKSPACE_SKILL_COUNT total)" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
+  echo "" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
+  for skill_dir in "$WORKSPACE_SKILLS_DIR/"*/; do
+    SKILL_NAME=$(basename "$skill_dir")
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      DESC=$(extract_yaml_field "$skill_dir/SKILL.md" "description")
+      [ -z "$DESC" ] && DESC="Workspace Custom Skill"
+      echo "### $SKILL_NAME" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
+      echo "- $DESC" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
+      echo "" >> "$DATA_DIR/$DATE/skills_summary_$DATE.md"
+    fi
+  done
+fi
 
 # 4. 生成技能数据JSON
 echo "生成技能数据..." >> $LOG_FILE
@@ -72,7 +119,13 @@ first=true
 for skill_dir in "$OPENCLAW_DIR/skills/"*/; do
   SKILL_NAME=$(basename "$skill_dir")
   if [ -f "$skill_dir/SKILL.md" ]; then
-    DESC=$(grep -m1 "<description>" "$skill_dir/SKILL.md" 2>/dev/null | sed 's/<[^>]*>//g' | tr -d '\n' | head -c 300 || echo "OpenClaw Skill")
+    # 从YAML frontmatter提取description
+    DESC=$(extract_yaml_field "$skill_dir/SKILL.md" "description")
+    [ -z "$DESC" ] && DESC="OpenClaw Skill"
+    
+    # 提取emoji
+    EMOJI=$(sed -n 's/.*"emoji": *"\([^"]*\)".*/\1/p' "$skill_dir/SKILL.md" | head -1)
+    [ -z "$EMOJI" ] && EMOJI="📦"
     
     # Determine category
     case "$SKILL_NAME" in
@@ -94,7 +147,7 @@ for skill_dir in "$OPENCLAW_DIR/skills/"*/; do
       "description": "$DESC",
       "category": "$CAT",
       "location": "$skill_dir",
-      "icon": "📦"
+      "icon": "$EMOJI"
     }
 JSONEOF
   fi
@@ -105,8 +158,45 @@ cat >> "$SITE_DIR/data/skills.json" << 'JSONEOF'
 }
 JSONEOF
 
-# 5. 更新site.json
+# 4.1 添加工作空间Skills到JSON
+if [ -d "$WORKSPACE_SKILLS_DIR" ]; then
+  echo "添加工作空间Skills..." >> $LOG_FILE
+  for skill_dir in "$WORKSPACE_SKILLS_DIR/"*/; do
+    SKILL_NAME=$(basename "$skill_dir")
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      DESC=$(extract_yaml_field "$skill_dir/SKILL.md" "description")
+      [ -z "$DESC" ] && DESC="Workspace Custom Skill"
+      EMOJI="🛠️"
+      CAT="utilities"
+      
+      # 读取_meta.json获取类别
+      if [ -f "$skill_dir/_meta.json" ]; then
+        META_CAT=$(sed -n 's/.*"category": *"\([^"]*\)".*/\1/p' "$skill_dir/_meta.json" | head -1)
+        [ -n "$META_CAT" ] && CAT="$META_CAT"
+      fi
+      
+      # 追加到skills.json
+      python3 -c "
+import json
+with open('$SITE_DIR/data/skills.json', 'r') as f:
+    data = json.load(f)
+data['skills']['$SKILL_NAME'] = {
+    'name': '$SKILL_NAME',
+    'description': '$DESC',
+    'category': '$CAT',
+    'location': '$skill_dir',
+    'icon': '$EMOJI'
+}
+with open('$SITE_DIR/data/skills.json', 'w') as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)
+" 2>/dev/null || echo "- 解析$SKILL_NAME失败" >> $LOG_FILE
+    fi
+  done
+fi
+
+# 5. 更新site.json（含categories和i18n）
 echo "更新site.json..." >> $LOG_FILE
+TOTAL_SKILLS=$((SKILL_COUNT + WORKSPACE_SKILL_COUNT))
 cat > "$SITE_DIR/data/site.json" << EOF
 {
   "site": {
@@ -116,9 +206,26 @@ cat > "$SITE_DIR/data/site.json" << EOF
     "version": "1.0.0",
     "lastUpdated": "$(date +%Y-%m-%d)"
   },
+  "i18n": {
+    "languages": [
+      { "code": "en", "name": "English", "nativeName": "English" },
+      { "code": "zh", "name": "Chinese", "nativeName": "中文" }
+    ],
+    "defaultLang": "en"
+  },
   "stats": {
-    "totalSkills": $SKILL_COUNT,
-    "totalDocs": $DOC_COUNT
+    "totalSkills": $TOTAL_SKILLS,
+    "totalDocs": $DOC_COUNT,
+    "categories": [
+      { "id": "ai-ml", "name": "AI/ML", "icon": "🤖", "skills": ["gemini", "openai-image-gen", "openai-whisper", "coding-agent", "nano-banana-pro"] },
+      { "id": "media", "name": "Media", "icon": "🎬", "skills": ["spotify-player", "songsee", "sonoscli", "video-frames", "canvas", "camsnap"] },
+      { "id": "productivity", "name": "Productivity", "icon": "📋", "skills": ["notion", "obsidian", "things-mac", "trello", "apple-notes", "bear-notes"] },
+      { "id": "communication", "name": "Communication", "icon": "💬", "skills": ["discord", "slack", "imsg", "wacli", "voice-call", "bluebubbles"] },
+      { "id": "development", "name": "Development", "icon": "💻", "skills": ["github", "tmux", "skill-creator"] },
+      { "id": "multimedia", "name": "Multimedia", "icon": "🎨", "skills": ["gifgrep", "nano-pdf"] },
+      { "id": "iot", "name": "IoT", "icon": "🏠", "skills": ["openhue", "goplaces", "eightctl"] },
+      { "id": "utilities", "name": "Utilities", "icon": "🔧", "skills": ["1password", "apple-reminders", "blogwatcher", "blucli", "food-order", "gog", "healthcheck", "himalaya", "local-places", "mcporter", "model-usage", "openai-whisper-api", "oracle", "ordercli", "peekaboo", "sag", "session-logs", "sherpa-onnx-tts", "summarize", "weather", "clawhub"] }
+    ]
   }
 }
 EOF
@@ -132,7 +239,9 @@ cat > "$COLLECTOR_DIR/index.md" << EOF
 
 ## Collection Stats
 
-- Skills: $SKILL_COUNT
+- Built-in Skills: $SKILL_COUNT
+- Workspace Skills: $WORKSPACE_SKILL_COUNT
+- Total Skills: $TOTAL_SKILLS
 - Docs: $DOC_COUNT
 
 ## Collection Dates
