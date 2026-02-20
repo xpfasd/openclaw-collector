@@ -139,8 +139,12 @@ for skill_dir in "$OPENCLAW_DIR/skills/"*/; do
       *) CAT="utilities" ;;
     esac
     
-    [ -z "$first" ] && echo "," >> "$SITE_DIR/data/skills.json"
+    # 添加逗号（除了第一个）
+    if [ "$first" = "false" ]; then
+      echo "," >> "$SITE_DIR/data/skills.json"
+    fi
     first=false
+    
     cat >> "$SITE_DIR/data/skills.json" << JSONEOF
     "$SKILL_NAME": {
       "name": "$SKILL_NAME",
@@ -158,9 +162,11 @@ cat >> "$SITE_DIR/data/skills.json" << 'JSONEOF'
 }
 JSONEOF
 
-# 4.1 添加工作空间Skills到JSON
+# 4.1 添加工作空间Skills（重新生成完整JSON）
 if [ -d "$WORKSPACE_SKILLS_DIR" ]; then
-  echo "添加工作空间Skills..." >> $LOG_FILE
+  echo "添加工作空间Skills到JSON..." >> $LOG_FILE
+  WORKSPACE_SKILLS_JSON="{"
+  first_ws=true
   for skill_dir in "$WORKSPACE_SKILLS_DIR/"*/; do
     SKILL_NAME=$(basename "$skill_dir")
     if [ -f "$skill_dir/SKILL.md" ]; then
@@ -175,23 +181,27 @@ if [ -d "$WORKSPACE_SKILLS_DIR" ]; then
         [ -n "$META_CAT" ] && CAT="$META_CAT"
       fi
       
-      # 追加到skills.json
-      python3 -c "
+      if [ "$first_ws" = "false" ]; then
+        WORKSPACE_SKILLS_JSON+=","
+      fi
+      first_ws=false
+      
+      WORKSPACE_SKILLS_JSON+=""$SKILL_NAME": {"name": "$SKILL_NAME", "description": "$DESC", "category": "$CAT", "location": "$skill_dir", "icon": "$EMOJI"}"
+    fi
+  done
+  WORKSPACE_SKILLS_JSON+="}"
+  
+  # 使用Python合并JSON
+  python3 -c "
 import json
 with open('$SITE_DIR/data/skills.json', 'r') as f:
     data = json.load(f)
-data['skills']['$SKILL_NAME'] = {
-    'name': '$SKILL_NAME',
-    'description': '$DESC',
-    'category': '$CAT',
-    'location': '$skill_dir',
-    'icon': '$EMOJI'
-}
+ws_skills = $WORKSPACE_SKILLS_JSON
+if ws_skills:
+    data['skills'].update(ws_skills)
 with open('$SITE_DIR/data/skills.json', 'w') as f:
     json.dump(data, f, indent=2, ensure_ascii=False)
-" 2>/dev/null || echo "- 解析$SKILL_NAME失败" >> $LOG_FILE
-    fi
-  done
+" >> $LOG_FILE 2>&1
 fi
 
 # 5. 更新site.json（含categories和i18n）
