@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw Collection - Skills & Docs Index</title>
+  <meta name="description" content="OpenClaw Skills and Docs Collection - 52 Skills, 638 Docs">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f23; color: #fff; min-height: 100vh; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header { text-align: center; padding: 40px 0; }
+    h1 { font-size: 3rem; margin-bottom: 10px; background: linear-gradient(90deg, #00d9ff, #00ff88); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .subtitle { color: #888; font-size: 1.1rem; }
+    .stats { display: flex; justify-content: center; gap: 40px; margin: 30px 0; }
+    .stat { text-align: center; padding: 20px 40px; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
+    .stat-value { font-size: 2.5rem; font-weight: bold; color: #00d9ff; }
+    .stat-label { color: #888; margin-top: 5px; }
+    
+    .search-box { margin: 30px 0; }
+    .search-box input { width: 100%; max-width: 600px; padding: 16px 24px; font-size: 1.1rem; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; outline: none; transition: all 0.3s; }
+    .search-box input:focus { border-color: #00d9ff; }
+    .search-box input::placeholder { color: #666; }
+    
+    .tabs { display: flex; gap: 10px; margin: 20px 0; justify-content: center; }
+    .tab { padding: 12px 24px; background: rgba(255,255,255,0.05); border: none; border-radius: 8px; color: #888; cursor: pointer; transition: all 0.2s; font-size: 1rem; }
+    .tab.active { background: #00d9ff; color: #000; font-weight: 600; }
+    .tab:hover:not(.active) { background: rgba(255,255,255,0.1); }
+    
+    .section { margin-top: 30px; }
+    .section h2 { color: #00d9ff; margin-bottom: 20px; font-size: 1.5rem; }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; transition: all 0.3s; cursor: pointer; }
+    .card:hover { transform: translateY(-4px); border-color: #00d9ff; background: rgba(0,217,255,0.1); }
+    .card-name { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; color: #fff; }
+    .card-desc { color: #888; font-size: 0.9rem; line-height: 1.5; }
+    .card-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .tag { padding: 4px 10px; background: rgba(0,217,255,0.2); color: #00d9ff; border-radius: 20px; font-size: 0.75rem; }
+    
+    .categories { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0; }
+    .category { padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #888; text-decoration: none; transition: all 0.2s; }
+    .category:hover { background: rgba(0,217,255,0.1); color: #00d9ff; border-color: #00d9ff; }
+    
+    footer { text-align: center; margin-top: 60px; padding: 20px; color: #444; border-top: 1px solid rgba(255,255,255,0.1); }
+    .hidden { display: none; }
+    
+    .no-results { text-align: center; padding: 40px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🦞 OpenClaw Collection</h1>
+      <p class="subtitle">OpenClaw Skills & Docs Index</p>
+      
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">52</div>
+          <div class="stat-label">Skills</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">638</div>
+          <div class="stat-label">Docs</div>
+        </div>
+      </div>
+      
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search skills or docs...">
+      </div>
+      
+      <div class="tabs">
+        <button class="tab active" data-tab="skills">Skills</button>
+        <button class="tab" data-tab="docs">Docs</button>
+        <button class="tab" data-tab="categories">Categories</button>
+      </div>
+    </header>
+    
+    <div id="skills" class="section">
+      <h2>📦 All Skills (52)</h2>
+      <div class="grid" id="skillsGrid"></div>
+    </div>
+    
+    <div id="docs" class="section hidden">
+      <h2>📄 All Docs (638)</h2>
+      <div class="grid" id="docsGrid"></div>
+    </div>
+    
+    <div id="categories" class="section hidden">
+      <h2>🏷️ Categories</h2>
+      <div class="categories">
+        <a href="#" class="category">AI & ML</a>
+        <a href="#" class="category">Productivity</a>
+        <a href="#" class="category">Development</a>
+        <a href="#" class="category">Communication</a>
+        <a href="#" class="category">Media</a>
+        <a href="#" class="category">Automation</a>
+        <a href="#" class="category">Storage</a>
+        <a href="#" class="category">Music</a>
+        <a href="#" class="category">Weather</a>
+        <a href="#" class="category">Health</a>
+      </div>
+    </div>
+    
+    <div class="no-results hidden" id="noResults">
+      <p>No results found. Try a different search term.</p>
+    </div>
+    
+    <footer>
+      <p>Last Updated: 2026-02-14 08:30</p>
+      <p style="color:#666;margin-top:10px">Auto-collected every 30 minutes</p>
+    </footer>
+  </div>
+  
+  <script>
+    const skills = [
+      { name: "1password", desc: "1Password password manager integration" },
+      { name: "apple-notes", desc: "Apple Notes integration for macOS" },
+      { name: "apple-reminders", desc: "Apple Reminders integration" },
+      { name: "bear-notes", desc: "Bear notes app integration" },
+      { name: "blogwatcher", desc: "Blog monitoring and RSS watcher" },
+      { name: "blucli", desc: "Bluetooth CLI utilities" },
+      { name: "bluebubbles", desc: "BlueBubbles iMessage bridge" },
+      { name: "camsnap", desc: "Camera snapshot tool" },
+      { name: "canvas", desc: "Canvas LMS integration" },
+      { name: "clawhub", desc: "ClawHub service discovery" },
+      { name: "coding-agent", desc: "AI coding agent integration" },
+      { name: "discord", desc: "Discord bot and integration" },
+      { name: "eightctl", desc: "8x8 control utilities" },
+      { name: "food-order", desc: "Food ordering integration" },
+      { name: "gemini", desc: "Google Gemini AI integration" },
+      { name: "gifgrep", desc: "GIF search and filtering tool" },
+      { name: "github", desc: "GitHub API integration" },
+      { name: "gog", desc: "GoG gaming platform" },
+      { name: "goplaces", desc: "Places discovery integration" },
+      { name: "healthcheck", desc: "System health monitoring" },
+      { name: "himalaya", desc: "Email CLI client" },
+      { name: "imsg", desc: "iMessage integration" },
+      { name: "local-places", desc: "Local places data" },
+      { name: "mcporter", desc: "Minecraft server porter" },
+      { name: "model-usage", desc: "AI model usage tracking" },
+      { name: "nano-banana-pro", desc: "Nano Banana Pro tool" },
+      { name: "nano-pdf", desc: "PDF processing tool" },
+      { name: "notion", desc: "Notion integration" },
+      { name: "obsidian", desc: "Obsidian vault integration" },
+      { name: "openai-image-gen", desc: "OpenAI image generation" },
+      { name: "openai-whisper", desc: "OpenAI Whisper speech-to-text" },
+      { name: "openai-whisper-api", desc: "OpenAI Whisper API" },
+      { name: "openhue", desc: "Philips Hue smart home" },
+      { name: "oracle", desc: "Oracle cloud integration" },
+      { name: "ordercli", desc: "Order management CLI" },
+      { name: "peekaboo", desc: "Screen capture tool" },
+      { name: "sag", desc: "Sage AI integration" },
+      { name: "session-logs", desc: "Session logging tool" },
+      { name: "sherpa-onnx-tts", desc: "Sherpa ONNX TTS engine" },
+      { name: "skill-creator", desc: "Skill creation tool" },
+      { name: "slack", desc: "Slack integration" },
+      { name: "songsee", desc: "Song recognition tool" },
+      { name: "sonoscli", desc: "Sonos speaker control" },
+      { name: "spotify-player", desc: "Spotify playback control" },
+      { name: "summarize", desc: "Content summarization" },
+      { name: "things-mac", desc: "Things app integration" },
+      { name: "tmux", desc: "Tmux session management" },
+      { name: "trello", desc: "Trello board integration" },
+      { name: "video-frames", desc: "Video frame extraction" },
+      { name: "voice-call", desc: "Voice call integration" },
+      { name: "wacli", desc: "WA CLI messaging" },
+      { name: "weather", desc: "Weather data integration" }
+    ];
+    
+    const docs = [
+      { name: "Getting Started", desc: "Documentation for new users" },
+      { name: "Configuration Guide", desc: "How to configure OpenClaw" },
+      { name: "Skills Reference", desc: "Built-in skills documentation" },
+      { name: "API Reference", desc: "OpenClaw API documentation" },
+      { name: "Troubleshooting", desc: "Common issues and solutions" }
+    ];
+    
+    function renderSkills(list) {
+      const grid = document.getElementById('skillsGrid');
+      if (list.length === 0) {
+        document.getElementById('noResults').classList.remove('hidden');
+        return;
+      }
+      document.getElementById('noResults').classList.add('hidden');
+      grid.innerHTML = list.map(s => `
+        <div class="card">
+          <div class="card-name">${s.name}</div>
+          <div class="card-desc">${s.desc}</div>
+        </div>
+      `).join('');
+    }
+    
+    function renderDocs(list) {
+      const grid = document.getElementById('docsGrid');
+      if (list.length === 0) {
+        document.getElementById('noResults').classList.remove('hidden');
+        return;
+      }
+      document.getElementById('noResults').classList.add('hidden');
+      grid.innerHTML = list.map(d => `
+        <div class="card">
+          <div class="card-name">${d.name}</div>
+          <div class="card-desc">${d.desc}</div>
+        </div>
+      `).join('');
+    }
+    
+    // Initial render
+    renderSkills(skills.slice(0, 20));
+    
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(tab.dataset.tab).classList.remove('hidden');
+      });
+    });
+    
+    // Search
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const activeTab = document.querySelector('.tab.active').dataset.tab;
+      
+      if (activeTab === 'skills') {
+        const filtered = skills.filter(s => 
+          s.name.toLowerCase().includes(query) || 
+          s.desc.toLowerCase().includes(query)
+        );
+        renderSkills(filtered);
+      } else if (activeTab === 'docs') {
+        const filtered = docs.filter(d => 
+          d.name.toLowerCase().includes(query) || 
+          d.desc.toLowerCase().includes(query)
+        );
+        renderDocs(filtered);
+      }
+    });
+  </script>
+</body>
+</html>
