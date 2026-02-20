@@ -70,7 +70,7 @@ extract_yaml_field() {
   if [ -f "$file" ]; then
     local desc=$(sed -n "s/^$field: *\"\([^\"]*\)\"/\1/p" "$file" | head -1)
     if [ -z "$desc" ]; then
-      desc=$(sed -n "s/^$field: *\([^#\n]*\)/\1/p" "$file" | head -1 | tr -d ' ')
+      desc=$(sed -n "s/^$field: *\([^#\n]*\)/\1/p" "$file" | head -1 | xargs echo)
     fi
     echo "$desc" | sed 's/"/\\"/g' | head -c 300
   fi
