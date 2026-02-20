@@ -4511,3 +4511,50 @@ SyntaxError: Expected ',' or '}' after property value in JSON at position 240 (l
 
 Node.js v25.5.0
 推送到GitHub...
+[main 2b57f5b] Auto-collect: 2026-02-20_13-14
+ Committer: xie xie <xiexie@xiedeMac-mini.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 65 insertions(+), 15 deletions(-)
+=== [2026-02-20_13-15] 开始收集 ===
+收集Skills...
+- 找到       52 个内置Skills
+收集工作空间Skills...
+- 找到        2 个工作空间Skills
+收集Docs...
+- 找到      638 个文档
+生成技能摘要...
+生成技能数据...
+添加工作空间Skills...
+Added 2 workspace skills
+更新site.json...
+更新索引...
+生成网站...
+🏗️  Building OpenClaw Site (Multilingual)...
+
+📁  Copying assets...
+🌐 Generating English (en) pages...
+   ✓ English done
+🌐 Generating Chinese (zh) pages...
+   ✓ Chinese done
+
+✅  Build complete!
+📂  Output: /Users/xiexie/.openclaw/workspace/openclaw-site-output
+📊  Pages generated:
+   - index.html (2 languages)
+   - skills/index.html + 52 skill pages (2 languages)
+   - categories/index.html (2 languages)
+
+🌍 Languages:
+   - English: /
+   - 中文: /zh/
+推送到GitHub...

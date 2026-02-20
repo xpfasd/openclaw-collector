@@ -162,46 +162,56 @@ cat >> "$SITE_DIR/data/skills.json" << 'JSONEOF'
 }
 JSONEOF
 
-# 4.1 添加工作空间Skills（重新生成完整JSON）
+# 4.1 添加工作空间Skills（使用Python合并）
 if [ -d "$WORKSPACE_SKILLS_DIR" ]; then
-  echo "添加工作空间Skills到JSON..." >> $LOG_FILE
-  WORKSPACE_SKILLS_JSON="{"
+  echo "添加工作空间Skills..." >> $LOG_FILE
+  
+  # 收集工作空间技能数据
+  WORKSPACE_DATA="["
   first_ws=true
   for skill_dir in "$WORKSPACE_SKILLS_DIR/"*/; do
     SKILL_NAME=$(basename "$skill_dir")
     if [ -f "$skill_dir/SKILL.md" ]; then
       DESC=$(extract_yaml_field "$skill_dir/SKILL.md" "description")
       [ -z "$DESC" ] && DESC="Workspace Custom Skill"
-      EMOJI="🛠️"
-      CAT="utilities"
       
-      # 读取_meta.json获取类别
-      if [ -f "$skill_dir/_meta.json" ]; then
-        META_CAT=$(sed -n 's/.*"category": *"\([^"]*\)".*/\1/p' "$skill_dir/_meta.json" | head -1)
-        [ -n "$META_CAT" ] && CAT="$META_CAT"
-      fi
+      # 转义DESC中的特殊字符
+      DESC=$(echo "$DESC" | sed 's/"/\\"/g' | tr '\n' ' ')
       
       if [ "$first_ws" = "false" ]; then
-        WORKSPACE_SKILLS_JSON+=","
+        WORKSPACE_DATA+=","
       fi
       first_ws=false
-      
-      WORKSPACE_SKILLS_JSON+=""$SKILL_NAME": {"name": "$SKILL_NAME", "description": "$DESC", "category": "$CAT", "location": "$skill_dir", "icon": "$EMOJI"}"
+      WORKSPACE_DATA+="{\"name\":\"$SKILL_NAME\",\"description\":\"$DESC\",\"category\":\"utilities\",\"icon\":\"🛠️\"}"
     fi
   done
-  WORKSPACE_SKILLS_JSON+="}"
+  WORKSPACE_DATA+="]"
   
-  # 使用Python合并JSON
-  python3 -c "
+  # 使用Python合并
+  python3 << PYEOF >> $LOG_FILE 2>&1
 import json
+
+# 读取现有skills.json
 with open('$SITE_DIR/data/skills.json', 'r') as f:
     data = json.load(f)
-ws_skills = $WORKSPACE_SKILLS_JSON
-if ws_skills:
-    data['skills'].update(ws_skills)
+
+# 添加工作空间技能
+ws_data = $WORKSPACE_DATA
+for skill in ws_data:
+    data['skills'][skill['name']] = {
+        'name': skill['name'],
+        'description': skill['description'],
+        'category': skill['category'],
+        'location': '$WORKSPACE_SKILLS_DIR/' + skill['name'] + '/',
+        'icon': skill['icon']
+    }
+
+# 写回
 with open('$SITE_DIR/data/skills.json', 'w') as f:
     json.dump(data, f, indent=2, ensure_ascii=False)
-" >> $LOG_FILE 2>&1
+
+print(f"Added {len(ws_data)} workspace skills")
+PYEOF
 fi
 
 # 5. 更新site.json（含categories和i18n）
