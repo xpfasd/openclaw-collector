@@ -4185,3 +4185,31 @@ nothing to commit, working tree clean
 fatal: unable to access 'https://github.com/xpfasd/openclaw-site.git/': Empty reply from server
 === [2026-02-20_11-00] 收集完成 ===
 ✅ 收集完成！时间: 2026-02-20_11-00
+=== [2026-02-20_11-30] 开始收集 ===
+收集Skills...
+- 找到       52 个Skills
+收集Docs...
+- 找到      638 个文档
+生成技能摘要...
+生成技能数据...
+更新site.json...
+更新索引...
+生成网站...
+<anonymous_script>:10
+    "apple-notes": {
+    ^
+
+SyntaxError: Expected ',' or '}' after property value in JSON at position 226 (line 10 column 5)
+    at JSON.parse (<anonymous>)
+    at Object.<anonymous> (/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js:24:29)
+    at Module._compile (node:internal/modules/cjs/loader:1803:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)
+    at Module.load (node:internal/modules/cjs/loader:1524:32)
+    at Module._load (node:internal/modules/cjs/loader:1326:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v25.5.0
+推送到GitHub...
