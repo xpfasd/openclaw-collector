@@ -3972,3 +3972,189 @@ SyntaxError: Expected ',' or '}' after property value in JSON at position 226 (l
 
 Node.js v25.5.0
 推送到GitHub...
+[main 91ffe9b] Auto-collect: 2026-02-20_10-30
+ Committer: xie xie <xiexie@xiedeMac-mini.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 7 files changed, 1215 insertions(+), 2 deletions(-)
+ create mode 100644 data/2026-02-20_10-30/docs_dirs_2026-02-20_10-30.txt
+ create mode 100644 data/2026-02-20_10-30/docs_list_2026-02-20_10-30.txt
+ create mode 100644 data/2026-02-20_10-30/skills_list_2026-02-20_10-30.txt
+ create mode 100644 data/2026-02-20_10-30/skills_summary_2026-02-20_10-30.md
+ create mode 100644 index.html
+To https://github.com/xpfasd/openclaw-collector.git
+   45475a9..91ffe9b  main -> main
+同步GitHub Pages...
+Reinitialized existing Git repository in /Users/xiexie/.openclaw/workspace/openclaw-site-output/.git/
+[main 0d01630] Site update: 2026-02-20_10-30
+ Committer: xie xie <xiexie@xiedeMac-mini.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 149 files changed, 24583 insertions(+), 690 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 es/categories/index.html
+ create mode 100644 es/index.html
+ create mode 100644 es/skills/apple-notes/index.html
+ create mode 100644 es/skills/bird/index.html
+ create mode 100644 es/skills/canvas/index.html
+ create mode 100644 es/skills/coding-agent/index.html
+ create mode 100644 es/skills/discord/index.html
+ create mode 100644 es/skills/gemini/index.html
+ create mode 100644 es/skills/gifgrep/index.html
+ create mode 100644 es/skills/github/index.html
+ create mode 100644 es/skills/goplaces/index.html
+ create mode 100644 es/skills/healthcheck/index.html
+ create mode 100644 es/skills/imsg/index.html
+ create mode 100644 es/skills/index.html
+ create mode 100644 es/skills/nano-banana-pro/index.html
+ create mode 100644 es/skills/notion/index.html
+ create mode 100644 es/skills/obsidian/index.html
+ create mode 100644 es/skills/openai-image-gen/index.html
+ create mode 100644 es/skills/openai-whisper/index.html
+ create mode 100644 es/skills/openhue/index.html
+ create mode 100644 es/skills/skill-creator/index.html
+ create mode 100644 es/skills/slack/index.html
+ create mode 100644 es/skills/songsee/index.html
+ create mode 100644 es/skills/spotify-player/index.html
+ create mode 100644 es/skills/summarize/index.html
+ create mode 100644 es/skills/things-mac/index.html
+ create mode 100644 es/skills/tmux/index.html
+ create mode 100644 es/skills/video-frames/index.html
+ create mode 100644 es/skills/weather/index.html
+ create mode 100644 ja/categories/index.html
+ create mode 100644 ja/index.html
+ create mode 100644 ja/skills/apple-notes/index.html
+ create mode 100644 ja/skills/bird/index.html
+ create mode 100644 ja/skills/canvas/index.html
+ create mode 100644 ja/skills/coding-agent/index.html
+ create mode 100644 ja/skills/discord/index.html
+ create mode 100644 ja/skills/gemini/index.html
+ create mode 100644 ja/skills/gifgrep/index.html
+ create mode 100644 ja/skills/github/index.html
+ create mode 100644 ja/skills/goplaces/index.html
+ create mode 100644 ja/skills/healthcheck/index.html
+ create mode 100644 ja/skills/imsg/index.html
+ create mode 100644 ja/skills/index.html
+ create mode 100644 ja/skills/nano-banana-pro/index.html
+ create mode 100644 ja/skills/notion/index.html
+ create mode 100644 ja/skills/obsidian/index.html
+ create mode 100644 ja/skills/openai-image-gen/index.html
+ create mode 100644 ja/skills/openai-whisper/index.html
+ create mode 100644 ja/skills/openhue/index.html
+ create mode 100644 ja/skills/skill-creator/index.html
+ create mode 100644 ja/skills/slack/index.html
+ create mode 100644 ja/skills/songsee/index.html
+ create mode 100644 ja/skills/spotify-player/index.html
+ create mode 100644 ja/skills/summarize/index.html
+ create mode 100644 ja/skills/things-mac/index.html
+ create mode 100644 ja/skills/tmux/index.html
+ create mode 100644 ja/skills/video-frames/index.html
+ create mode 100644 ja/skills/weather/index.html
+ create mode 100644 ko/categories/index.html
+ create mode 100644 ko/index.html
+ create mode 100644 ko/skills/apple-notes/index.html
+ create mode 100644 ko/skills/bird/index.html
+ create mode 100644 ko/skills/canvas/index.html
+ create mode 100644 ko/skills/coding-agent/index.html
+ create mode 100644 ko/skills/discord/index.html
+ create mode 100644 ko/skills/gemini/index.html
+ create mode 100644 ko/skills/gifgrep/index.html
+ create mode 100644 ko/skills/github/index.html
+ create mode 100644 ko/skills/goplaces/index.html
+ create mode 100644 ko/skills/healthcheck/index.html
+ create mode 100644 ko/skills/imsg/index.html
+ create mode 100644 ko/skills/index.html
+ create mode 100644 ko/skills/nano-banana-pro/index.html
+ create mode 100644 ko/skills/notion/index.html
+ create mode 100644 ko/skills/obsidian/index.html
+ create mode 100644 ko/skills/openai-image-gen/index.html
+ create mode 100644 ko/skills/openai-whisper/index.html
+ create mode 100644 ko/skills/openhue/index.html
+ create mode 100644 ko/skills/skill-creator/index.html
+ create mode 100644 ko/skills/slack/index.html
+ create mode 100644 ko/skills/songsee/index.html
+ create mode 100644 ko/skills/spotify-player/index.html
+ create mode 100644 ko/skills/summarize/index.html
+ create mode 100644 ko/skills/things-mac/index.html
+ create mode 100644 ko/skills/tmux/index.html
+ create mode 100644 ko/skills/video-frames/index.html
+ create mode 100644 ko/skills/weather/index.html
+ create mode 100644 zh/categories/index.html
+ create mode 100644 zh/index.html
+ create mode 100644 zh/skills/apple-notes/index.html
+ create mode 100644 zh/skills/bird/index.html
+ create mode 100644 zh/skills/canvas/index.html
+ create mode 100644 zh/skills/coding-agent/index.html
+ create mode 100644 zh/skills/discord/index.html
+ create mode 100644 zh/skills/gemini/index.html
+ create mode 100644 zh/skills/gifgrep/index.html
+ create mode 100644 zh/skills/github/index.html
+ create mode 100644 zh/skills/goplaces/index.html
+ create mode 100644 zh/skills/healthcheck/index.html
+ create mode 100644 zh/skills/imsg/index.html
+ create mode 100644 zh/skills/index.html
+ create mode 100644 zh/skills/nano-banana-pro/index.html
+ create mode 100644 zh/skills/notion/index.html
+ create mode 100644 zh/skills/obsidian/index.html
+ create mode 100644 zh/skills/openai-image-gen/index.html
+ create mode 100644 zh/skills/openai-whisper/index.html
+ create mode 100644 zh/skills/openhue/index.html
+ create mode 100644 zh/skills/skill-creator/index.html
+ create mode 100644 zh/skills/slack/index.html
+ create mode 100644 zh/skills/songsee/index.html
+ create mode 100644 zh/skills/spotify-player/index.html
+ create mode 100644 zh/skills/summarize/index.html
+ create mode 100644 zh/skills/things-mac/index.html
+ create mode 100644 zh/skills/tmux/index.html
+ create mode 100644 zh/skills/video-frames/index.html
+ create mode 100644 zh/skills/weather/index.html
+To https://github.com/xpfasd/openclaw-site.git
+   855c0a1..0d01630  main -> gh-pages
+=== [2026-02-20_10-30] 收集完成 ===
+✅ 收集完成！时间: 2026-02-20_10-30
+=== [2026-02-20_11-00] 开始收集 ===
+收集Skills...
+- 找到       52 个Skills
+收集Docs...
+- 找到      638 个文档
+生成技能摘要...
+生成技能数据...
+更新site.json...
+更新索引...
+生成网站...
+<anonymous_script>:10
+    "apple-notes": {
+    ^
+
+SyntaxError: Expected ',' or '}' after property value in JSON at position 226 (line 10 column 5)
+    at JSON.parse (<anonymous>)
+    at Object.<anonymous> (/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js:24:29)
+    at Module._compile (node:internal/modules/cjs/loader:1803:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1934:10)
+    at Module.load (node:internal/modules/cjs/loader:1524:32)
+    at Module._load (node:internal/modules/cjs/loader:1326:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v25.5.0
+推送到GitHub...
