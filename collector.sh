@@ -62,17 +62,19 @@ find "$OPENCLAW_DIR/docs/" -type d > "$DATA_DIR/$DATE/docs_dirs_$DATE.txt"
 
 # 3. 生成技能摘要
 echo "生成技能摘要..." >> $LOG_FILE
-
 # 函数：从YAML frontmatter提取字段
+# Function: extract YAML frontmatter field
 extract_yaml_field() {
   local file=$1
   local field=$2
   if [ -f "$file" ]; then
-    # 提取description字段（支持带引号的值）
-    sed -n "s/^$field: *\"\(.*\)\"/\1/p" "$file" | head -1 | sed 's/"/\\"/g' | head -c 300
+    local desc=$(sed -n "s/^$field: *\"\([^\"]*\)\"/\1/p" "$file" | head -1)
+    if [ -z "$desc" ]; then
+      desc=$(sed -n "s/^$field: *\([^#\n]*\)/\1/p" "$file" | head -1 | tr -d ' ')
+    fi
+    echo "$desc" | sed 's/"/\\"/g' | head -c 300
   fi
 }
-cat > "$DATA_DIR/$DATE/skills_summary_$DATE.md" << EOF
 # OpenClaw Skills Summary
 Generated: $DATE
 
