@@ -75,12 +75,13 @@ extract_yaml_field() {
     echo "$desc" | sed 's/"/\\"/g' | head -c 300
   fi
 }
+
+# 生成技能摘要文件
+cat > "$DATA_DIR/$DATE/skills_summary_$DATE.md" << 'SUMMARYEOF'
 # OpenClaw Skills Summary
-Generated: $DATE
 
-## Skills List ($SKILL_COUNT total)
-
-EOF
+## Skills List
+SUMMARYEOF
 
 for skill_dir in "$OPENCLAW_DIR/skills/"*/; do
   SKILL_NAME=$(basename "$skill_dir")
