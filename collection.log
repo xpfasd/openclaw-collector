@@ -28055,3 +28055,56 @@ Error: Cannot find module '/Users/xiexie/.openclaw/workspace/openclaw-site/gener
 
 Node.js v25.5.0
 推送到GitHub...
+[main e68c359] Auto-collect: 2026-02-28_13-00
+ 8 files changed, 1074 insertions(+), 2 deletions(-)
+ create mode 100644 data/2026-02-28_13-00/docs_dirs_2026-02-28_13-00.txt
+ create mode 100644 data/2026-02-28_13-00/docs_list_2026-02-28_13-00.txt
+ create mode 100644 data/2026-02-28_13-00/skills_list_2026-02-28_13-00.txt
+ create mode 100644 data/2026-02-28_13-00/skills_summary_2026-02-28_13-00.md
+ create mode 100644 data/2026-02-28_13-00/workspace_skills/frontend-design/SKILL.md
+ create mode 100644 data/2026-02-28_13-00/workspace_skills/keyword-hunter/SKILL.md
+To https://github.com/xpfasd/openclaw-collector.git
+   d446730..e68c359  main -> main
+同步GitHub Pages...
+Reinitialized existing Git repository in /Users/xiexie/.openclaw/workspace/openclaw-site-output/.git/
+On branch main
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+Everything up-to-date
+=== [2026-02-28_13-00] 收集完成 ===
+✅ 收集完成！时间: 2026-02-28_13-00
+=== [2026-02-28_13-30] 开始收集 ===
+收集Skills...
+- 找到       52 个内置Skills
+收集工作空间Skills...
+- 找到        2 个工作空间Skills
+收集Docs...
+- 找到      638 个文档
+生成技能摘要...
+生成技能数据...
+添加工作空间Skills...
+Added 2 workspace skills
+更新site.json...
+更新索引...
+生成网站...
+node:internal/modules/cjs/loader:1450
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/xiexie/.openclaw/workspace/openclaw-site/generate.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1447:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1058:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1063:22)
+    at Module._load (node:internal/modules/cjs/loader:1233:25)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v25.5.0
+推送到GitHub...
